@@ -1,0 +1,3125 @@
+{
+  "info": {
+    "name": "SmartTeam PIMS API Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated specification-based Postman collection for SmartTeam PIMS. All requests include Mapped TC IDs and use Test Data Specification IDs."
+  },
+  "item": [
+    {
+      "name": "00 - Auth Bootstrap & JWT/RBAC",
+      "description": "Login, logout, private-route token checks, and strict 401/403 coverage from JWT-001 to JWT-008.",
+      "item": [
+        {
+          "name": "[TC-AUTH-001] Login as Student (ACC-STU-001)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-001\nData IDs: ACC-STU-001\nPurpose: Generate JWT for Student and save token variable.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student01@fpt.edu.vn\",\n  \"password\": \"Student@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Login role is Student', function () { pm.expect(pm.response.json().role).to.eql('Student'); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('studentToken', json.accessToken || json.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Login as Admin (ACC-ADM-001)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-002\nData IDs: ACC-ADM-001\nPurpose: Generate JWT for Admin and save token variable.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin.pims@fpt.edu.vn\",\n  \"password\": \"Admin@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Login role is Admin', function () { pm.expect(pm.response.json().role).to.eql('Admin'); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('adminToken', json.accessToken || json.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Login as Mentor (ACC-MEN-001)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-002\nData IDs: ACC-MEN-001\nPurpose: Generate JWT for Mentor and save token variable.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mentor.java@fpt.edu.vn\",\n  \"password\": \"Mentor@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Login role is Mentor', function () { pm.expect(pm.response.json().role).to.eql('Mentor'); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('mentorToken', json.accessToken || json.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Login as Mentor (ACC-MEN-002)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-002\nData IDs: ACC-MEN-002\nPurpose: Generate JWT for Mentor and save token variable.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mentor.ai@fpt.edu.vn\",\n  \"password\": \"Mentor@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Login role is Mentor', function () { pm.expect(pm.response.json().role).to.eql('Mentor'); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('mentorAiToken', json.accessToken || json.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Login as Committee (ACC-COM-001)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-002\nData IDs: ACC-COM-001\nPurpose: Generate JWT for Committee and save token variable.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"committee01@fpt.edu.vn\",\n  \"password\": \"Committee@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Login role is Committee', function () { pm.expect(pm.response.json().role).to.eql('Committee'); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('committeeToken', json.accessToken || json.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[JWT-005 / TC-AUTH-004] Protected API with expired JWT",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{expiredStudentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: JWT-005 / TC-AUTH-004\nData IDs: JWT-005, ACC-STU-001\nPurpose: Verify private API returns 401 for expired token."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 401', function () { pm.response.to.have.status(401); });",
+                  "pm.test('No protected body leaked', function(){ pm.expect(pm.response.text()).to.not.include('passwordHash'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[JWT-006 / TC-AUTH-004] Protected API with tampered JWT",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tamperedStudentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: JWT-006 / TC-AUTH-004\nData IDs: JWT-006, ACC-STU-001\nPurpose: Verify private API returns 401 for tampered signature."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 401', function () { pm.response.to.have.status(401); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[JWT-007 / TC-AUTH-005] Student token attempts Admin users API",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users",
+            "description": "Mapped to: JWT-007 / TC-AUTH-005\nData IDs: JWT-007, ADM-DATA-004\nPurpose: Verify wrong role returns 403."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[JWT-008 / TC-AUTH-004] Missing Authorization header on team create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams",
+            "description": "Mapped to: JWT-008 / TC-AUTH-004\nData IDs: JWT-008\nPurpose: Verify missing JWT returns 401.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamName\": \"Unauthorized Team\",\n  \"topic\": \"Should fail\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 401', function () { pm.response.to.have.status(401); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01 - Authentication & Users",
+      "description": "Authentication and user-management APIs mapped to TC-AUTH-001..TC-AUTH-010.",
+      "item": [
+        {
+          "name": "[TC-AUTH-001] Student login returns JWT and audit record",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-001\nData IDs: ACC-STU-001, ADM-DATA-005\nPurpose: Login student01 and issue JWT.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student01@fpt.edu.vn\",\n  \"password\": \"Student@12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Token exists', function(){ pm.expect(pm.response.json().accessToken || pm.response.json().token).to.exist; });",
+                  "pm.collectionVariables.set('studentToken', pm.response.json().accessToken || pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Get role dashboard after login",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/dashboards/me",
+            "description": "Mapped to: TC-AUTH-002\nData IDs: JWT-001\nPurpose: Verify dashboard is student-specific and no cross-role widgets appear."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('No Admin widget', function(){ pm.expect(pm.response.text()).to.not.include('User Management'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-003] Invalid password does not issue JWT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Mapped to: TC-AUTH-003\nData IDs: ACC-MEN-001, ADM-DATA-006\nPurpose: Use mentor.java with wrong password.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mentor.java@fpt.edu.vn\",\n  \"password\": \"Wrong@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 401', function () { pm.response.to.have.status(401); });",
+                  "pm.test('No token returned', function(){ pm.expect(pm.response.text()).to.not.include('accessToken'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-004] Expired JWT blocks student profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{expiredStudentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-AUTH-004\nData IDs: JWT-005\nPurpose: 401 Unauthorized for expired token."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 401', function () { pm.response.to.have.status(401); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-005] Student cannot access Admin user management",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users",
+            "description": "Mapped to: TC-AUTH-005\nData IDs: JWT-007, ADM-DATA-004\nPurpose: RBAC 403."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-006] Mentor cannot submit Committee final evaluation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-AUTH-006\nData IDs: COM-004, ACC-MEN-001\nPurpose: RBAC blocks mentor role from final scoring.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"{{teamId}}\",\n  \"finalScore\": 9.0,\n  \"comment\": \"Should be forbidden\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-007] Admin changes target user role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/teacher01@fpt.edu.vn/role",
+            "description": "Mapped to: TC-AUTH-007\nData IDs: ACC-ADM-001, ADM-DATA-007\nPurpose: Admin role update creates audit log.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newRole\": \"Mentor\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Role updated', function(){ pm.expect(pm.response.text()).to.include('Mentor'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-008] Logout active session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/logout",
+            "description": "Mapped to: TC-AUTH-008\nData IDs: JWT-001\nPurpose: Client/server token invalidation as designed.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{studentToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Logout acknowledged', function(){ pm.expect(pm.response.code).to.be.oneOf([200,204]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-009] Register duplicate email rejected",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/register",
+            "description": "Mapped to: TC-AUTH-009\nData IDs: ACC-DUP-001\nPurpose: Duplicate student01 email must not create a new user.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student01@fpt.edu.vn\",\n  \"password\": \"Student@12345\",\n  \"role\": \"Student\",\n  \"studentId\": \"SE200001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-010] Users/me must not leak sensitive fields",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/users/me",
+            "description": "Mapped to: TC-AUTH-010\nData IDs: JWT-001\nPurpose: Response must not include passwordHash/resetToken/secret key."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('No sensitive fields', function(){ const body=pm.response.text(); ['passwordHash','resetToken','secret','privateKey'].forEach(x => pm.expect(body).to.not.include(x)); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 - Course & Profile Management",
+      "description": "Course/class code, import, join course, and profile validation APIs.",
+      "item": [
+        {
+          "name": "[TC-COURSE-001] Create active course and class code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/courses",
+            "description": "Mapped to: TC-COURSE-001\nData IDs: CRS-001, ACC-ADM-001\nPurpose: Create SWT301-SE20A05 active course.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseName\": \"SWT301-SE20A05\",\n  \"classCode\": \"SWT301-A05-2026\",\n  \"status\": \"Active\",\n  \"ownerTeacher\": \"mentor.java@fpt.edu.vn\",\n  \"milestone1Deadline\": \"2026-06-10T23:59:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Course active', function(){ pm.expect(pm.response.text()).to.include('SWT301-A05-2026'); });",
+                  "const json=pm.response.json(); pm.collectionVariables.set('courseId', json.courseId || json.id); pm.collectionVariables.set('classCode', json.classCode || 'SWT301-A05-2026');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-002] Upload valid course material",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/courses/{{courseId}}/materials",
+            "description": "Mapped to: TC-COURSE-002\nData IDs: FILE-001 style guideline.pdf, CRS-001\nPurpose: Upload valid PDF/DOCX guideline material.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "guideline.pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "type",
+                  "value": "application/pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "2 MB",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-003] Import valid enrollment CSV",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/courses/{{courseId}}/enrollments/import",
+            "description": "Mapped to: TC-COURSE-003\nData IDs: IMP-001\nPurpose: Import students_valid.csv with student01/student02/student03.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "students_valid.csv",
+                  "type": "text"
+                },
+                {
+                  "key": "encoding",
+                  "value": "UTF-8",
+                  "type": "text"
+                },
+                {
+                  "key": "columns",
+                  "value": "student_id,email,full_name",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-004] Student joins active course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/courses/join",
+            "description": "Mapped to: TC-COURSE-004\nData IDs: CRS-001, ACC-STU-001\nPurpose: Join course by SWT301-A05-2026.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Enrollment created', function(){ pm.expect(pm.response.text()).to.include('SWT301-A05-2026'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-005] Student cannot join closed course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/courses/join",
+            "description": "Mapped to: TC-COURSE-005\nData IDs: CRS-003\nPurpose: Closed course SWT301-OLD-2025 is rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classCode\": \"SWT301-OLD-2025\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-001] Update valid student profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-001\nData IDs: STU-001\nPurpose: Save complete profile for AI input.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student01@fpt.edu.vn\",\n  \"gpa\": 3.5,\n  \"skills\": [\n    \"Java\",\n    \"Spring Boot\",\n    \"SQL\"\n  ],\n  \"availability\": \"Mon/Wed 19:00-21:00\",\n  \"githubUrl\": \"https://github.com/student01/pims\",\n  \"cvFile\": \"student01_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-002] Accept GPA boundary 0.00",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-002\nData IDs: STU-004\nPurpose: Boundary GPA minimum accepted.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student04@fpt.edu.vn\",\n  \"gpa\": 0.0,\n  \"skills\": [\n    \"Java\"\n  ],\n  \"availability\": \"Mon/Wed 19:00-21:00\",\n  \"githubUrl\": \"https://github.com/student04/java\",\n  \"cvFile\": \"student04_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-002] Accept GPA boundary 4.00",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-002\nData IDs: STU-005\nPurpose: Boundary GPA maximum accepted.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student05@fpt.edu.vn\",\n  \"gpa\": 4.0,\n  \"skills\": [\n    \"AI\",\n    \"Python\",\n    \"Data\"\n  ],\n  \"availability\": \"Mon/Wed 19:00-21:00\",\n  \"githubUrl\": \"https://github.com/student05/ai\",\n  \"cvFile\": \"student05_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-003] Reject GPA below 0.0",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-003\nData IDs: STU-006\nPurpose: Invalid GPA -1.00 rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student06@fpt.edu.vn\",\n  \"gpa\": -1.0,\n  \"skills\": [\n    \"React\"\n  ],\n  \"availability\": \"Mon/Wed 19:00-21:00\",\n  \"githubUrl\": \"https://github.com/student06\",\n  \"cvFile\": \"student06_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-003] Reject GPA above 4.0",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-003\nData IDs: STU-007\nPurpose: Invalid GPA 4.50 rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student07@fpt.edu.vn\",\n  \"gpa\": 4.5,\n  \"skills\": [\n    \"SQL\"\n  ],\n  \"availability\": \"Mon/Wed 19:00-21:00\",\n  \"githubUrl\": \"https://github.com/student07\",\n  \"cvFile\": \"student07_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-004] Reject invalid GitHub URL",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile",
+            "description": "Mapped to: TC-PROFILE-004\nData IDs: STU-011\nPurpose: github.com/no-protocol rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student11@fpt.edu.vn\",\n  \"gpa\": 3.1,\n  \"skills\": [\n    \"Java\"\n  ],\n  \"availability\": \"Fri 20:00-22:00\",\n  \"githubUrl\": \"github.com/no-protocol\",\n  \"cvFile\": \"student11_cv.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-PROFILE-005] Reject invalid/oversized CV upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/student/profile/cv",
+            "description": "Mapped to: TC-PROFILE-005\nData IDs: FILE-005, FILE-006\nPurpose: Reject cv.exe or oversized PDF according to whitelist/limit.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "cv.exe",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "3 MB",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03 - Group Management & Workspace",
+      "description": "Team creation, invite, team-size rules, confirm team, task/chat workspace.",
+      "item": [
+        {
+          "name": "[TC-GROUP-001] Create new valid team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams",
+            "description": "Mapped to: TC-GROUP-001\nData IDs: TEAM-001, CRS-001\nPurpose: Create team and save teamId for later requests.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamName\": \"SmartTeam Alpha\",\n  \"topic\": \"PIMS - Intelligent Project Management & Team Matching\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Team created', function(){ pm.expect(pm.response.text()).to.include('SmartTeam Alpha'); });",
+                  "const json=pm.response.json(); pm.collectionVariables.set('teamId', json.teamId || json.id || 'TEAM-001');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-002] Reject duplicate team name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams",
+            "description": "Mapped to: TC-GROUP-002\nData IDs: TEAM-005\nPurpose: Duplicate SmartTeam Alpha within same course rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamName\": \"SmartTeam Alpha\",\n  \"topic\": \"Duplicate name\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-003] Student already in team cannot create another",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams",
+            "description": "Mapped to: TC-GROUP-003\nData IDs: TEAM-001, ACC-STU-001\nPurpose: One active team per student rule.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamName\": \"Second Team\",\n  \"topic\": \"Should fail\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-004] Invite eligible student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/{{teamId}}/invitations",
+            "description": "Mapped to: TC-GROUP-004\nData IDs: ACC-STU-002, TEAM-001\nPurpose: Invite student02 from same course and not in team.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inviteeEmail\": \"student02@fpt.edu.vn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('invitationId', json.invitationId || json.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-005] Reject invitee already in another team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/{{teamId}}/invitations",
+            "description": "Mapped to: TC-GROUP-005\nData IDs: ACC-STU-003, TEAM-007\nPurpose: student03 already belongs to another team.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inviteeEmail\": \"student03@fpt.edu.vn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-006] Reject invite when team already has 5 members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-002/invitations",
+            "description": "Mapped to: TC-GROUP-006\nData IDs: TEAM-002, ADM-DATA-002\nPurpose: Max team size 5; sixth invite rejected.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inviteeEmail\": \"student06@fpt.edu.vn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-007] Confirm valid team of 4 members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/confirm",
+            "description": "Mapped to: TC-GROUP-007\nData IDs: TEAM-001, ADM-DATA-003\nPurpose: TEAM-001 has 4 members and becomes eligible.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"confirm\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-008] Reject confirm team below 4 members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-003/confirm",
+            "description": "Mapped to: TC-GROUP-008\nData IDs: TEAM-003, ADM-DATA-003\nPurpose: TEAM-003 has 3 members and is not eligible.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"confirm\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-009] Create workspace task and chat message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/workspaces/TEAM-001/tasks",
+            "description": "Mapped to: TC-GROUP-009\nData IDs: WSP-001, WSP-002\nPurpose: Create task/message visible only to team.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task\": \"Thiết kế ERD\",\n  \"assignee\": \"student03@fpt.edu.vn\",\n  \"dueDate\": \"2026-06-07\",\n  \"message\": \"Chốt kiến trúc Spring Boot + React\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('taskId', json.taskId || json.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-GROUP-010] Non-member cannot access workspace",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/workspaces/TEAM-001",
+            "description": "Mapped to: TC-GROUP-010\nData IDs: WSP-004\nPurpose: Use non-member token in real run; expected 403/404 and no internal leakage."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04 - AI Matching Engine",
+      "description": "Teammate matching and mentor recommendation APIs with deterministic seed data.",
+      "item": [
+        {
+          "name": "[TC-AI-001] Find best teammates with complete profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/teammates/recommendations",
+            "description": "Mapped to: TC-AI-001\nData IDs: AI-TM-001..AI-TM-006, STU-001\nPurpose: Return sorted compatibility score list 0-100.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseStudent\": \"student01@fpt.edu.vn\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Scores in range', function(){ const list=pm.response.json().recommendations || []; list.forEach(x => pm.expect(x.score).to.be.within(0,100)); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-002] Incomplete profile lowers score or prompts update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/teammates/recommendations",
+            "description": "Mapped to: TC-AI-002\nData IDs: STU-009, STU-010, AI-TM-004, AI-TM-005\nPurpose: Missing skills/availability should lower confidence.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseStudent\": \"student09@fpt.edu.vn\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-003] Exclude students already in team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/teammates/recommendations",
+            "description": "Mapped to: TC-AI-003\nData IDs: ACC-STU-003, TEAM-007\nPurpose: student03 must not be recommended when already in active team.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseStudent\": \"student01@fpt.edu.vn\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Busy student excluded', function(){ pm.expect(pm.response.text()).to.not.include('student03@fpt.edu.vn'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-004] Compatibility score range validation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/teammates/recommendations",
+            "description": "Mapped to: TC-AI-004\nData IDs: AI-TM-001..AI-TM-006\nPurpose: Every compatibilityScore must be 0-100.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseStudent\": \"student01@fpt.edu.vn\",\n  \"courseCode\": \"SWT301-A05-2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Score range 0-100', function(){ (pm.response.json().recommendations||[]).forEach(r => pm.expect(r.compatibilityScore || r.score).to.be.within(0,100)); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-005] Availability overlap affects rank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/teammates/recommendations",
+            "description": "Mapped to: TC-AI-005\nData IDs: STU-001, STU-004, STU-003\nPurpose: Candidate with Mon/Wed overlap ranks above shifted schedule when other factors close.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseStudent\": \"student01@fpt.edu.vn\",\n  \"compareCandidates\": [\n    \"student04@fpt.edu.vn\",\n    \"student03@fpt.edu.vn\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-006] Recommend mentor by topic/expertise",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/mentors/recommendations",
+            "description": "Mapped to: TC-AI-006\nData IDs: TOPIC-001, AI-MEN-001, AI-MEN-002\nPurpose: MEN-001/MEN-002 rank high for PIMS Java Web + AI topic.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"projectTopic\": \"PIMS - Intelligent Project Management & Team Matching\",\n  \"requiredKeywords\": [\n    \"Java Web\",\n    \"AI Matching\",\n    \"SQL\",\n    \"React\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); const first=(json.recommendations||[])[0]||{}; pm.collectionVariables.set('mentorId', first.mentorId || 'MEN-001');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-007] Mentor recommendation for finance domain",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/mentors/recommendations",
+            "description": "Mapped to: TC-AI-007\nData IDs: TOPIC-002, AI-MEN-003\nPurpose: MEN-003 should rank highest for financial dashboard.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"projectTopic\": \"Financial Dashboard for Student Project Budget\",\n  \"requiredKeywords\": [\n    \"Finance\",\n    \"Dashboard\",\n    \"SQL\",\n    \"Reporting\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-008] Reject too-short project description",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/mentors/recommendations",
+            "description": "Mapped to: TC-AI-008\nData IDs: TOPIC-006\nPurpose: Description too brief; do not generate misleading result.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"projectTopic\": \"App quản lý\",\n  \"description\": \"AI app\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-009] Empty state when no suitable mentor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ai/mentors/recommendations",
+            "description": "Mapped to: TC-AI-009\nData IDs: TOPIC-005-like no match\nPurpose: No suitable mentor should return empty state without crash.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"projectTopic\": \"Quantum Compiler Security\",\n  \"requiredKeywords\": [\n    \"Quantum\",\n    \"Compiler\",\n    \"Security\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('No crash', function(){ pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AI-010] Audit log for AI matching request",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/audit-logs?action=AI_MATCHING&actor=student01@fpt.edu.vn",
+            "description": "Mapped to: TC-AI-010\nData IDs: AI-TM-001, ADM-DATA-007\nPurpose: Verify actor, time, matching type, and summary stored without excessive sensitive data."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Audit contains AI action', function(){ pm.expect(pm.response.text()).to.include('AI'); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05 - Mentor Evaluation & Upload",
+      "description": "Mentor request, milestone upload, source link, review and reminder APIs.",
+      "item": [
+        {
+          "name": "[TC-MENTOR-001] Send valid mentor request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/mentor-requests",
+            "description": "Mapped to: TC-MENTOR-001\nData IDs: REQ-001, TEAM-001, MEN-001\nPurpose: Team sends mentor request and status becomes Pending.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mentorId\": \"MEN-001\",\n  \"message\": \"Request mentoring for PIMS Java Web project\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('mentorRequestId', json.requestId || json.id || 'REQ-001');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-MENTOR-002] Mentor accepts request",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/mentor/requests/{{mentorRequestId}}",
+            "description": "Mapped to: TC-MENTOR-002\nData IDs: REQ-001, ACC-MEN-001\nPurpose: Mentor accepts pending request.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"ACCEPT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-MENTOR-003] Mentor rejects request with reason",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorAiToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/mentor/requests/REQ-002",
+            "description": "Mapped to: TC-MENTOR-003\nData IDs: REQ-002, ACC-MEN-002\nPurpose: Mentor rejects with reason.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"REJECT\",\n  \"reason\": \"Topic ngoài chuyên môn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-UPLOAD-001] Upload proposal on time",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/milestones/MS-001/submissions",
+            "description": "Mapped to: TC-UPLOAD-001\nData IDs: MS-001, FILE-001\nPurpose: proposal.pdf uploaded before deadline.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "proposal.pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "type",
+                  "value": "PDF",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "2 MB",
+                  "type": "text"
+                },
+                {
+                  "key": "submitTime",
+                  "value": "2026-06-10T22:30:00",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('submissionId', json.submissionId || json.id || 'SUB-001');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-UPLOAD-002] Upload report after deadline",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/milestones/MS-002/submissions",
+            "description": "Mapped to: TC-UPLOAD-002\nData IDs: MS-002, FILE-002\nPurpose: Late report accepted/flagged according to policy.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "report.pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "type",
+                  "value": "PDF",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "18 MB",
+                  "type": "text"
+                },
+                {
+                  "key": "submitTime",
+                  "value": "2026-06-18T00:15:00",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Late status is visible', function(){ pm.expect(pm.response.text()).to.include('Late'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-UPLOAD-003] Reject malware-like executable upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/milestones/MS-001/submissions",
+            "description": "Mapped to: TC-UPLOAD-003\nData IDs: FILE-005, FILE-010\nPurpose: Reject EXE/double extension by whitelist/MIME validation.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "malware.exe",
+                  "type": "text"
+                },
+                {
+                  "key": "type",
+                  "value": "EXE",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "3 MB",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-UPLOAD-004] Upload valid source code link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{studentToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/teams/TEAM-001/milestones/MS-003/source-link",
+            "description": "Mapped to: TC-UPLOAD-004\nData IDs: WSP-003, FILE-004\nPurpose: Save GitHub/source URL.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"https://github.com/pims/team-alpha\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-MENTOR-004] Mentor reviews milestone",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/mentor/submissions/{{submissionId}}/reviews",
+            "description": "Mapped to: TC-MENTOR-004\nData IDs: REV-001\nPurpose: Mentor publishes feedback and grade.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grade\": 8.5,\n  \"feedback\": \"Feedback rõ ràng >= 20 ký tự. Need clearer ERD and architecture notes.\",\n  \"publish\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('reviewId', json.reviewId || json.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-MENTOR-005] Mentor final grade is forbidden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-MENTOR-005\nData IDs: COM-004, ACC-MEN-001\nPurpose: Mentor cannot create final evaluation.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"finalScore\": 9.0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-MENTOR-006] Trigger mentor review reminder job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/system/jobs/mentor-review-reminders/run",
+            "description": "Mapped to: TC-MENTOR-006\nData IDs: ADM-DATA-007\nPurpose: Run reminder job for overdue review queue.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": \"SUB-001\",\n  \"slaDays\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "06 - Committee Evaluation",
+      "description": "Final evaluation, publish/lock, unlock, RBAC and report export APIs.",
+      "item": [
+        {
+          "name": "[TC-COM-001] List final-eligible projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations/eligible?courseCode=SWT301-A05-2026",
+            "description": "Mapped to: TC-COM-001\nData IDs: COM-001, TEAM-001\nPurpose: Committee sees eligible teams and mentor reports."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-002] Save valid final score draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-002\nData IDs: COM-001\nPurpose: Save draft final evaluation 8.2.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"technical\": 8.5,\n  \"presentation\": 8.0,\n  \"innovation\": 8.0,\n  \"finalScore\": 8.2,\n  \"comment\": \"Good implementation\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "",
+                  "const json=pm.response.json(); pm.collectionVariables.set('evaluationId', json.evaluationId || json.id || 'COM-001');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-003] Accept final score boundary 0",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-003\nData IDs: COM-005\nPurpose: Boundary minimum 0 accepted if rubric allows.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"finalScore\": 0,\n  \"comment\": \"Boundary min\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-003] Accept final score boundary 10",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-003\nData IDs: COM-006\nPurpose: Boundary maximum 10 accepted.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"finalScore\": 10,\n  \"comment\": \"Boundary max\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-004] Reject final score negative",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-004\nData IDs: COM-007\nPurpose: Reject score below 0.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"finalScore\": -0.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-004] Reject final score above 10",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-004\nData IDs: COM-008\nPurpose: Reject score above 10.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-001\",\n  \"finalScore\": 10.1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', function () { pm.response.to.have.status(400); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-005] Publish final score",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations/{{evaluationId}}/publish",
+            "description": "Mapped to: TC-COM-005\nData IDs: COM-009\nPurpose: Publish score; student dashboard shows grading update.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publish\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-006] Reject edit after publish without unlock",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations/{{evaluationId}}",
+            "description": "Mapped to: TC-COM-006\nData IDs: COM-010\nPurpose: Published evaluation is locked.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"finalScore\": 9.0,\n  \"comment\": \"Try edit after publish\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-007] Admin unlocks evaluation with audit reason",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/evaluations/{{evaluationId}}/unlock",
+            "description": "Mapped to: TC-COM-007\nData IDs: COM-010, ADM-DATA-007\nPurpose: Admin unlock requires audit reason.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Correction approved after review\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-008] Committee cannot access unassigned course/project",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations?courseCode=SWT302",
+            "description": "Mapped to: TC-COM-008\nData IDs: COM-008\nPurpose: Unauthorized course scope returns 403/404."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 403', function () { pm.response.to.have.status(403); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-009] Reject final publish for invalid team size",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/evaluations",
+            "description": "Mapped to: TC-COM-009\nData IDs: TEAM-003, TEAM-004, COM-003\nPurpose: Final evaluation requires team size 4-5.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": \"TEAM-003\",\n  \"finalScore\": 8.0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', function () { pm.response.to.have.status(409); });",
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COM-010] Export final grade report by course",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{committeeToken}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/committee/reports/final-scores?courseCode=SWT301-A05-2026&format=xlsx",
+            "description": "Mapped to: TC-COM-010\nData IDs: COM-009, COM-010\nPurpose: Report includes Team, Project, Mentor, Score, Status and matches evaluations table."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Report export success', function(){ pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1",
+      "type": "string",
+      "description": "Spring Boot API base URL; change if backend prefix is different."
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin.pims@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-ADM-001"
+    },
+    {
+      "key": "adminPassword",
+      "value": "Admin@12345",
+      "type": "string",
+      "description": "ACC-ADM-001"
+    },
+    {
+      "key": "studentEmail",
+      "value": "student01@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-STU-001"
+    },
+    {
+      "key": "studentPassword",
+      "value": "Student@12345",
+      "type": "string",
+      "description": "ACC-STU-001"
+    },
+    {
+      "key": "student2Email",
+      "value": "student02@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-STU-002"
+    },
+    {
+      "key": "mentorEmail",
+      "value": "mentor.java@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-MEN-001"
+    },
+    {
+      "key": "mentorPassword",
+      "value": "Mentor@12345",
+      "type": "string",
+      "description": "ACC-MEN-001"
+    },
+    {
+      "key": "mentorAiEmail",
+      "value": "mentor.ai@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-MEN-002"
+    },
+    {
+      "key": "mentorAiPassword",
+      "value": "Mentor@12345",
+      "type": "string",
+      "description": "ACC-MEN-002"
+    },
+    {
+      "key": "committeeEmail",
+      "value": "committee01@fpt.edu.vn",
+      "type": "string",
+      "description": "ACC-COM-001"
+    },
+    {
+      "key": "committeePassword",
+      "value": "Committee@12345",
+      "type": "string",
+      "description": "ACC-COM-001"
+    },
+    {
+      "key": "studentToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT-001; saved after student login."
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT-002; saved after admin login."
+    },
+    {
+      "key": "mentorToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT-003; saved after mentor login."
+    },
+    {
+      "key": "committeeToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT-004; saved after committee login."
+    },
+    {
+      "key": "mentorAiToken",
+      "value": "",
+      "type": "string",
+      "description": "Saved after mentor.ai login for AI/ML mentor rejection flow."
+    },
+    {
+      "key": "expiredStudentToken",
+      "value": "expired.jwt.token",
+      "type": "string",
+      "description": "JWT-005"
+    },
+    {
+      "key": "tamperedStudentToken",
+      "value": "tampered.jwt.token",
+      "type": "string",
+      "description": "JWT-006"
+    },
+    {
+      "key": "courseId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by course create or resolved from CRS-001."
+    },
+    {
+      "key": "classCode",
+      "value": "SWT301-A05-2026",
+      "type": "string",
+      "description": "CRS-001 active class code."
+    },
+    {
+      "key": "closedClassCode",
+      "value": "SWT301-OLD-2025",
+      "type": "string",
+      "description": "CRS-003 closed course."
+    },
+    {
+      "key": "teamId",
+      "value": "TEAM-001",
+      "type": "string",
+      "description": "Returned by create team or seeded TEAM-001."
+    },
+    {
+      "key": "teamTooSmallId",
+      "value": "TEAM-003",
+      "type": "string",
+      "description": "Seeded invalid team with 3 members."
+    },
+    {
+      "key": "teamTooLargeId",
+      "value": "TEAM-004",
+      "type": "string",
+      "description": "Seeded invalid team with 6 members."
+    },
+    {
+      "key": "invitationId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by invite member API."
+    },
+    {
+      "key": "mentorId",
+      "value": "MEN-001",
+      "type": "string",
+      "description": "Default mentor for Java Web/PIMS topic."
+    },
+    {
+      "key": "mentorRequestId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by mentor request API."
+    },
+    {
+      "key": "submissionId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by milestone upload API."
+    },
+    {
+      "key": "reviewId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by mentor review API."
+    },
+    {
+      "key": "evaluationId",
+      "value": "",
+      "type": "string",
+      "description": "Returned by committee final evaluation draft API."
+    }
+  ]
+}
